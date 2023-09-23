@@ -1,0 +1,16 @@
+{
+    "name": "AK.JEcs.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e511e0d3f2c9f7749b2a433ed2903d91"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
