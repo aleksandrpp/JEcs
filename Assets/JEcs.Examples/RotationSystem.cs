@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AK.JEcs.Examples
 {
     [ExecutionGroup(SystemGroup.Update), ExecutionOrder(2)]
-    public struct RotationSystem : ISystem
+    public class RotationSystem : ISystem
     {
         public void Update(HashSet<Entity> entities)
         {

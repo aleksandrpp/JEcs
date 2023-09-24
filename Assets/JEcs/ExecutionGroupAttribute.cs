@@ -2,7 +2,7 @@
 
 namespace AK.JEcs
 {
-    [AttributeUsage(AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class ExecutionGroupAttribute : Attribute
     {
         public SystemGroup Value { get; }

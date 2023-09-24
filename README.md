@@ -15,7 +15,7 @@ The library uses prototypes to create Entity, and all Unity Component objects ar
 Systems are written separately, and their updates are performed based on the set priority in the necessary callback - Update, FixedUpdate, LateUpdate.
 
     [ExecutionGroup(SystemGroup.Update), ExecutionOrder(100)]
-    public struct MovementSystem : ISystem
+    public class MovementSystem : ISystem
     {
         public void Update(HashSet<Entity> entities)
         {
@@ -33,10 +33,10 @@ Systems, like components, can be added and removed in real-time, and their sorti
 
     _entityWorld = new EntityWorld();
     _entityWorld.AddSystem(new MovementSystem());
-    _entityWorld.RemoveSystem(new MovementSystem());
+    _entityWorld.RemoveSystem(typeof(MovementSystem));
 
 
-`v0.0.1`
+`v0.0.2`
 <br>
 
 https://github.com/aleksandrpp/JEcs

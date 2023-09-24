@@ -9,7 +9,7 @@ namespace AK.JEcs
 
         void AddSystem(ISystem system);
 
-        void RemoveSystem(ISystem system);
+        void RemoveSystem(Type systemType);
 
         void FixedUpdate();
 

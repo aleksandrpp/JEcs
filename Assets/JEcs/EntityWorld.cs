@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace AK.JEcs
@@ -7,42 +8,39 @@ namespace AK.JEcs
     {
         public HashSet<Entity> Entities { get; } = new();
         
-        private UniqueSortedList<ISystem> GetSystemGroup(ISystem system)
-        {
-            var attribute = system.GetType().GetCustomAttribute<ExecutionGroupAttribute>();
-            return (attribute?.Value ?? 0) switch
-            {
-                SystemGroup.Update => _updateSystems,
-                SystemGroup.FixedUpdate => _fixedUpdateSystems,
-                SystemGroup.LateUpdate => _lateUpdateSystems,
-                _ => _updateSystems
-            };
-        }
-        
-        private UniqueSortedList<ISystem> _updateSystems = new(new PriorityComparer());
-        private UniqueSortedList<ISystem> _fixedUpdateSystems = new(new PriorityComparer());
-        private UniqueSortedList<ISystem> _lateUpdateSystems = new(new PriorityComparer());
+        private SystemList _updateSystems = new();
+        private SystemList _fixedUpdateSystems = new();
+        private SystemList _lateUpdateSystems = new();
 
         public void AddSystem(ISystem system)
         {
             if (system == null)
                 return;
             
-            GetSystemGroup(system).Add(system);
+            GetSystemGroup(system.GetType()).Add(system);
         }
 
-        public void RemoveSystem(ISystem system)
+        public void RemoveSystem(Type systemType)
         {
-            if (system == null)
+            if (systemType == null)
                 return;
 
-            GetSystemGroup(system).Remove(system);
+            GetSystemGroup(systemType).Remove(systemType);
         }
+        
+        private SystemList GetSystemGroup(Type systemType) =>
+            (systemType.GetCustomAttribute<ExecutionGroupAttribute>()?.Value ?? 0) switch
+            {
+                SystemGroup.Update => _updateSystems,
+                SystemGroup.FixedUpdate => _fixedUpdateSystems,
+                SystemGroup.LateUpdate => _lateUpdateSystems,
+                _ => _updateSystems
+            };
 
         public void FixedUpdate()
         {
             for (int i = 0; i < _fixedUpdateSystems.Count; i++)
-                _updateSystems[i].Update(Entities);
+                _fixedUpdateSystems[i].Update(Entities);
         }
 
         public void Update()
@@ -54,7 +52,7 @@ namespace AK.JEcs
         public void LateUpdate()
         {
             for (int i = 0; i < _lateUpdateSystems.Count; i++)
-                _updateSystems[i].Update(Entities);
+                _lateUpdateSystems[i].Update(Entities);
         }
 
         public void Dispose()

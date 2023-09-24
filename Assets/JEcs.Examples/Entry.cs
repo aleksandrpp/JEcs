@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace AK.JEcs.Examples
@@ -33,15 +32,11 @@ namespace AK.JEcs.Examples
         private void Update()
         {
             if (Time.frameCount % 500 == 0)
-            {
                 _entityWorld.AddSystem(new RotationSystem());
-            }
-            
+
             if (Time.frameCount % 2000 == 0)
-            {
-                _entityWorld.RemoveSystem(new RotationSystem());
-            }
-            
+                _entityWorld.RemoveSystem(typeof(RotationSystem));
+
             _entityWorld.Update();
         }
 
