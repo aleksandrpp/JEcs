@@ -35,7 +35,7 @@ namespace AK.JEcs.Examples
                 _entityWorld.AddSystem(new RotationSystem());
 
             if (Time.frameCount % 2000 == 0)
-                _entityWorld.RemoveSystem(typeof(RotationSystem));
+                _entityWorld.RemoveSystem<RotationSystem>();
 
             _entityWorld.Update();
         }

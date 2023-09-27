@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 namespace AK.JEcs
@@ -94,15 +93,5 @@ namespace AK.JEcs
                     system?.Invoke(entity, components.Item1, components.Item2, components.Item3, components.Item4);
             }
         }
-        
-        
-        /*public static NativeArray<TResult> AsNativeArray<T, TResult>(this HashSet<Entity> entities) where T : Component where TResult : struct 
-        {
-            foreach (var entity in entities)
-            {
-                if (entity.Contains(out T component))
-                    ...
-            }
-        }*/
     }
 }

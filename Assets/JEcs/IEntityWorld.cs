@@ -7,9 +7,9 @@ namespace AK.JEcs
     {
         HashSet<Entity> Entities { get; }
 
-        void AddSystem(ISystem system);
+        void AddSystem<T>(T system) where T : ISystem;
 
-        void RemoveSystem(Type systemType);
+        void RemoveSystem<T>() where T : ISystem;
 
         void FixedUpdate();
 

@@ -15,12 +15,12 @@ namespace AK.JEcs
         }
 
         // O(n)
-        public void Add(ISystem item)
+        public void Add<T>(T item) where T : ISystem
         {
             if (item == null)
                 return;
 
-            Type type = item.GetType();
+            Type type = typeof(T);
 
             if (Contains(type))
                 return;
@@ -52,10 +52,9 @@ namespace AK.JEcs
         }
 
         // O(n)
-        public void Remove(Type type)
+        public void Remove<T>() where T : ISystem
         {
-            if (type == null)
-                return;
+            Type type = typeof(T);
 
             if (!Contains(type))
                 return;

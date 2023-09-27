@@ -33,10 +33,10 @@ Systems, like components, can be added and removed in real-time, and their sorti
 
     _entityWorld = new EntityWorld();
     _entityWorld.AddSystem(new MovementSystem());
-    _entityWorld.RemoveSystem(typeof(MovementSystem));
+    _entityWorld.RemoveSystem<MovementSystem>();
 
 
-`v0.0.2`
+`v0.0.3`
 <br>
 
 https://github.com/aleksandrpp/JEcs

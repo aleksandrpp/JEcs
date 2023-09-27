@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 
 namespace AK.JEcs
@@ -7,29 +6,26 @@ namespace AK.JEcs
     public class EntityWorld : IEntityWorld
     {
         public HashSet<Entity> Entities { get; } = new();
-        
+
         private SystemList _updateSystems = new();
         private SystemList _fixedUpdateSystems = new();
         private SystemList _lateUpdateSystems = new();
 
-        public void AddSystem(ISystem system)
+        public void AddSystem<T>(T system) where T : ISystem
         {
             if (system == null)
                 return;
             
-            GetSystemGroup(system.GetType()).Add(system);
+            GetSystemGroup<T>().Add(system);
         }
 
-        public void RemoveSystem(Type systemType)
+        public void RemoveSystem<T>() where T : ISystem
         {
-            if (systemType == null)
-                return;
-
-            GetSystemGroup(systemType).Remove(systemType);
+            GetSystemGroup<T>().Remove<T>();
         }
         
-        private SystemList GetSystemGroup(Type systemType) =>
-            (systemType.GetCustomAttribute<ExecutionGroupAttribute>()?.Value ?? 0) switch
+        private SystemList GetSystemGroup<T>() =>
+            (typeof(T).GetCustomAttribute<ExecutionGroupAttribute>()?.Value ?? 0) switch
             {
                 SystemGroup.Update => _updateSystems,
                 SystemGroup.FixedUpdate => _fixedUpdateSystems,
